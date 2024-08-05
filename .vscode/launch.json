@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "Debug videocat",
+            "type": "cppdbg",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/build",
+            "MIMode": "lldb",
+            "stopAtEntry": false,
+            "args": [
+                "http://samples.ffmpeg.org/MPEG2/mpegts-klv/Day%20Flight.mpg"
+            ],
+            "program": "${workspaceFolder}/build/videocat",
+            "logging": {
+                "engineLogging": true, 
+                "traceResponse": true
+            }
+        }
+    ],
+    "version": "2.0.0"
+}

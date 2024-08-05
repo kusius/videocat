@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "dict.h": "c",
+        "opt.h": "c",
+        "avcodec.h": "c",
+        "__config": "c"
+    }
+}
