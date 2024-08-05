@@ -5,6 +5,7 @@
 #include <libavutil/opt.h>
 #include <libavcodec/avcodec.h>
 #include "utils.h"
+#include "thirdparty/libmisb/include/unpack.h"
 
 static void setup() {
     printf("Initializing\n");
@@ -143,10 +144,26 @@ int main(int argc, char** argv) {
         dataStreamIndex = result;
     }
 
+    // Initialize the map that will hold the KLVs
+    struct KLVMap *klvmap = malloc(sizeof(struct KLVMap));
+
+
     while(av_read_frame(formatContext, packet) >=0) {
         if (packet->stream_index == dataStreamIndex) {
-            // decode the metadata
             fprintf(stdout, "Got data stream packet of size %d\n", packet->size);
+            // decode the metadata
+            // Trying to unpack the misb, check header to see error code
+            result = unpack_misb(packet->data, packet->size, klvmap);
+            if (result) {
+                fprintf(stderr, "Error unpacking the packet : %d\n", result);
+            } else {
+                // Iterating over the map to retrieve KLVs
+                for (int i = 0; i < 94; i++) {
+                    if (klvmap->KLVs[i])
+                        printf("Tag %d - Size %ld\n", klvmap->KLVs[i]->tag, klvmap->KLVs[i]->size);
+                }
+            }
+            
         }
     }
     // openCodecContext(&dataStreamIndex, &codecContext, formatContext, AVMEDIA_TYPE_DATA);
@@ -154,7 +171,7 @@ int main(int argc, char** argv) {
     //     fprintf(stdout, "Received packet from stream index %d\n", packet->stream_index);
     // }
 
-
+    free(klvmap);
     avformat_close_input(&formatContext);
 
     return shutdown(0);
