@@ -24,6 +24,102 @@ static int shutdown(int status) {
     exit(status);
 }
 
+void printValue(const struct GenericValue format) {
+
+  switch (format.type)
+  {
+  case UINT8:
+    fprintf(stdout, "%d", format.uint8_value);
+    break;
+  
+  case UINT16:
+    fprintf(stdout, "%d", format.uint16_value);
+    break;
+
+
+  case UINT32:
+    fprintf(stdout, "%d", format.uint32_value);
+    break;
+  case UINT64:
+    fprintf(stdout, "%llu", format.uint64_value);
+    break;
+
+
+  case INT8:
+    fprintf(stdout, "%d", format.int8_value);
+    break;
+  case INT16:
+    fprintf(stdout, "%d", format.int16_value);
+    break;
+  case INT32:
+    fprintf(stdout, "%d", format.int32_value);
+    break;
+  case INT64:
+    fprintf(stdout, "%lld", format.int64_value);
+
+    break;
+  case FLOAT:
+    fprintf(stdout, "%f", format.float_value);
+    break;
+  case DOUBLE:
+    fprintf(stdout, "%lf", format.double_value);
+    break;
+  case CHAR_P:
+    fprintf(stdout, "%s", format.charp_value);
+    break;
+  default:
+    fprintf(stdout, "unknown");
+    break;
+  }
+}
+
+char *getTypeName(const enum Format format) {
+  switch (format)
+  {
+  case UINT8:
+    return "UINT 8";
+    break;
+  
+  case UINT16:
+    return "UINT 16";
+    break;
+
+
+  case UINT32:
+    return "UINT 32";
+    break;
+  case UINT64:
+    return "UINT 64";
+    break;
+
+
+  case INT8:
+    return "INT 8";
+    break;
+  case INT16:
+    return "INT 16";
+    break;
+  case INT32:
+    return "INT 32";
+    break;
+  case INT64:
+    return "INT 64";
+    break;
+  case FLOAT:
+    return "FLOAT";
+    break;
+  case DOUBLE:
+    return "DOUBLE";
+    break;
+  case CHAR_P:
+    return "STRING";
+    break;
+  default:
+    return "UNKNOWN";
+    break;
+  }
+}
+
 static void printMetadata(const AVFormatContext *formatContext) {
     const AVDictionaryEntry *tag = NULL;
     fprintf(stdout, "Metadata(%d):\n", av_dict_count(formatContext->metadata));
@@ -158,10 +254,30 @@ int main(int argc, char** argv) {
                 fprintf(stderr, "Error unpacking the packet : %d\n", result);
             } else {
                 // Iterating over the map to retrieve KLVs
-                for (int i = 0; i < 94; i++) {
-                    if (klvmap->KLVs[i])
-                        printf("Tag %d - Size %ld\n", klvmap->KLVs[i]->tag, klvmap->KLVs[i]->size);
-                }
+                struct GenericValue latitude = klvmap->KLVs[SENSOR_LATITUDE]->value;
+                struct GenericValue longitude = klvmap->KLVs[SENSOR_LONGITUDE]->value;
+                struct GenericValue tail = klvmap->KLVs[PLATFORM_TAIL_NUMBER]->value;
+                struct GenericValue callsign = klvmap->KLVs[PLATFORM_CALL_SIGN]->value;
+
+
+                printValue(latitude);
+                fprintf(stdout, "\n");
+                printValue(longitude);
+                fprintf(stdout, "\n");
+                printValue(tail);
+                fprintf(stdout, "\n");
+                printValue(callsign);
+                fprintf(stdout, "\n");
+
+                // fprintf(stdout, "Sensor Lat Type: %s\n", getTypeName(latitude.type));
+                // fprintf(stdout, "Sensor Lon Type: %s\n", getTypeName(longitude.type));
+                // fprintf(stdout, "Tail number Type: %s\n", getTypeName(tail.type));
+                // fprintf(stdout, "Callsign Type: %s\n", getTypeName(callsign.type));
+                // print all metadata tags and length
+                // for (int i = 0; i < 94; i++) {
+                //     if (klvmap->KLVs[i])
+                //         printf("Tag %d - Size %ld\n", klvmap->KLVs[i]->tag, klvmap->KLVs[i]->size);
+                // }
             }
             
         }

@@ -21,7 +21,6 @@ enum Format {
   CHAR_P,
 };
 
-
 struct GenericValue {
   enum Format type;
   union {

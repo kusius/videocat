@@ -3,6 +3,8 @@
         "dict.h": "c",
         "opt.h": "c",
         "avcodec.h": "c",
-        "__config": "c"
+        "__config": "c",
+        "string": "c",
+        "string_view": "c"
     }
 }
