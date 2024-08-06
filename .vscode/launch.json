@@ -8,7 +8,7 @@
             "MIMode": "lldb",
             "stopAtEntry": false,
             "args": [
-                "http://samples.ffmpeg.org/MPEG2/mpegts-klv/Day%20Flight.mpg"
+                "night.mpg"
             ],
             "program": "${workspaceFolder}/build/videocat",
             "logging": {
