@@ -2,15 +2,20 @@
     "configurations": [
         {
             "name": "Debug videocat",
-            "type": "cppdbg",
             "request": "launch",
+            "type": "cppvsdbg",
             "cwd": "${workspaceFolder}/build",
-            "MIMode": "lldb",
+            "osx": {
+                "MIMode": "lldb",
+            },
             "stopAtEntry": false,
             "args": [
                 "night.mpg"
             ],
             "program": "${workspaceFolder}/build/videocat",
+            "windows": {
+                "program": "${workspaceFolder}/build/videocat.exe"
+            },
             "logging": {
                 "engineLogging": true, 
                 "traceResponse": true

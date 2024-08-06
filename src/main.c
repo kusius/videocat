@@ -9,8 +9,8 @@
 
 static void setup() {
     printf("Initializing\n");
-    av_register_all();
-    avcodec_register_all();
+    // av_register_all();
+    // avcodec_register_all();
     avformat_network_init();
 }
 
@@ -408,7 +408,7 @@ static void printMetadata(const AVFormatContext *formatContext) {
 }
 
 static void printInfo(const AVFormatContext *formatContext) {
-    fprintf(stdout, "Name: %s\n", formatContext->filename);
+    fprintf(stdout, "Name: %s\n", formatContext->url);
     fprintf(stdout, "Duration: %lld\n", formatContext->duration);
 
     const AVCodecDescriptor *videoDescriptor = avcodec_descriptor_get(formatContext->video_codec_id);
@@ -429,7 +429,7 @@ static int openCodecContext(int *outStreamIndex, AVCodecContext **outCodecContex
     
     result = av_find_best_stream(formatContext, type, -1, -1, NULL, 0);
     if(result < 0) {
-        fprintf(stderr, "Could not find %s stream in input file '%s'\n", av_get_media_type_string(type), formatContext->filename);
+        fprintf(stderr, "Could not find %s stream in input file '%s'\n", av_get_media_type_string(type), formatContext->url);
     } else {
         streamIndex = result;
         stream = formatContext->streams[streamIndex];
@@ -512,15 +512,17 @@ int main(int argc, char** argv) {
 
     result = av_find_best_stream(formatContext, AVMEDIA_TYPE_DATA, -1, -1, NULL, 0);
     if(result < 0) {
-        fprintf(stderr, "Could not find data stream in input file '%s'\n", formatContext->filename);
+        fprintf(stderr, "Could not find data stream in input file '%s'\n", formatContext->url);
     } else {
         fprintf(stdout, "Found data stream at index %d\n", result);
         dataStreamIndex = result;
     }
 
     // Initialize the map that will hold the KLVs
-    struct KLVMap *klvmap = malloc(sizeof(struct KLVMap));
-
+    struct KLVMap klvmap;
+    for (int i = 0; i < 94 ; i++) {
+       klvmap.KLVs[i] = NULL;
+    }
 
     while(av_read_frame(formatContext, packet) >=0) {
         if (packet->stream_index == dataStreamIndex) {
@@ -528,13 +530,13 @@ int main(int argc, char** argv) {
             fprintf(stdout, "Got data stream packet of size %d\n", packet->size);
             // decode the metadata
             // Trying to unpack the misb, check header to see error code
-            result = unpack_misb(packet->data, packet->size, klvmap);
+            result = unpack_misb(packet->data, packet->size, &klvmap);
             if (result) {
                 fprintf(stderr, "Error unpacking the packet : %d\n", result);
             } else {
                 // Iterating over the map to retrieve KLVs
                 for (int i = 0; i < 94; i++) {
-                  struct KLV *klv = klvmap->KLVs[i];
+                  const struct KLV *klv = klvmap.KLVs[i];
                     if (klv) {
                       const char *tag = getTagName(klv->tag);
                       fprintf(stdout, "%s (%ld bytes): ", tag, klv->size);
@@ -547,7 +549,7 @@ int main(int argc, char** argv) {
         }
     }
 
-    free(klvmap);
+    // freeMemory(klvmap);
     avformat_close_input(&formatContext);
 
     return shutdown(0);

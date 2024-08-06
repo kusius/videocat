@@ -1,10 +1,18 @@
 {
     "files.associations": {
+        ".fantomasignore": "ignore",
         "dict.h": "c",
         "opt.h": "c",
         "avcodec.h": "c",
         "__config": "c",
         "string": "c",
-        "string_view": "c"
+        "string_view": "c",
+        "stddef.h": "c",
+        "timeb.h": "c",
+        "stdint.h": "c",
+        "windows.h": "c",
+        "utils.h": "c",
+        "keys.h": "c",
+        "unpack.h": "c"
     }
 }

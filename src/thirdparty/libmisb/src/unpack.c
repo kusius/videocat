@@ -1,5 +1,5 @@
 #include "unpack.h"
-#include "utils.h"
+#include "../include/utils.h"
 
 #include <string.h>
 #include <stdlib.h>
