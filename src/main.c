@@ -524,6 +524,7 @@ int main(int argc, char** argv) {
 
     while(av_read_frame(formatContext, packet) >=0) {
         if (packet->stream_index == dataStreamIndex) {
+            fprintf(stdout, "************************************\n");
             fprintf(stdout, "Got data stream packet of size %d\n", packet->size);
             // decode the metadata
             // Trying to unpack the misb, check header to see error code
