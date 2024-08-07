@@ -17,15 +17,20 @@
 #define NK_IMPLEMENTATION
 #include "thirdparty/nuklear/nuklear.h"
 
-#include "platform.h"
+enum ApplicationInputEvent {
+    INPUT_EVENT_QUIT,
+    INPUT_EVENT_COUNT
+};
 
 typedef struct ApplicationState {
     const char *title;
     int running;
     struct nk_context *context;
     struct nk_colorf backgroundColor;
+    int inputs[INPUT_EVENT_COUNT];
 } ApplicationState;
 
+#include "platform.h"
 
 ApplicationState createApplication(const char *title, int windowWidth, int windowHeight) {
     ApplicationState applicationState;
@@ -44,10 +49,14 @@ void runApplication(ApplicationState *applicationState) {
     struct nk_colorf bg = applicationState->backgroundColor;
     
 
-    while(ctx) {
+    while(applicationState->running) {
         nk_input_begin(applicationState->context);
-        
+    
         // platform process input (applicationState)
+        platformProcessInput(applicationState);
+        if (applicationState->inputs[INPUT_EVENT_QUIT] == 1) {
+            applicationState->running = 0;
+        }
 
         nk_input_end(ctx);
 

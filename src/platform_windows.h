@@ -303,4 +303,19 @@ int platformRender(struct nk_colorf bg) {
         return 0;
 }
 
+
+void platformProcessInput(ApplicationState *applicationState) {
+    for(int i = 0; i < INPUT_EVENT_COUNT; i++) {
+        applicationState->inputs[i] = 0;
+    }
+
+    MSG msg;
+    while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
+            if (msg.message == WM_QUIT) {
+                applicationState->inputs[INPUT_EVENT_QUIT] = 1;
+            }
+            TranslateMessage(&msg);
+            DispatchMessageW(&msg);
+    }
+}
 #endif // PLATFORM_WIN32_H

@@ -70,6 +70,9 @@ static int openCodecContext(int *outStreamIndex, AVCodecContext **outCodecContex
 }
 
 int main(int argc, char** argv) {
+    ApplicationState applicationState = createApplication("VideoCat", 800, 600);
+    runApplication(&applicationState);
+
     setup();
 
     if (argc < 2) {
@@ -77,10 +80,7 @@ int main(int argc, char** argv) {
         shutdown(-1);
     }
 
-    ApplicationState applicationState = createApplication("VideoCat", 800, 600);
-
-    runApplication(&applicationState);
-
+    
     char fileName[500];
     strcpy(fileName, argv[1]);
     AVFormatContext *formatContext = NULL;
