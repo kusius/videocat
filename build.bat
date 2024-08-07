@@ -3,7 +3,7 @@ set PROJECT_DIR=%cd%
 set SRCDIR=%PROJECT_DIR%\src
 set PROJECT_BUILD_DIR=%PROJECT_DIR%\build
 
-FOR /F "tokens=* USEBACKQ" %%F IN (`dir /s /b Gyan.FFmpeg.Shared* ^| dir /s /b /ad ffmpeg*`) DO (
+FOR /F "tokens=* USEBACKQ" %%F IN (`%LOCALAPPDATA%\Microsoft\WinGet\Packages\ffmpeg*shared*`) DO (
 SET FFMPEG_DIR=%%F
 )
 

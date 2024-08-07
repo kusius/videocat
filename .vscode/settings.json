@@ -13,6 +13,7 @@
         "windows.h": "c",
         "utils.h": "c",
         "keys.h": "c",
-        "unpack.h": "c"
+        "unpack.h": "c",
+        "avutil.h": "c"
     }
 }

@@ -1,0 +1,37 @@
+{
+    "env": {
+        "myIncludePath": [
+            "${workspaceFolder}/thirdparty",
+            "${workspaceFolder}/src",
+            "~/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg.Shared*/ffmpeg*/include"
+        ],
+        "myDefines": [
+            
+        ]
+    },
+    "configurations": [
+        {
+            "name": "Mac",
+            "macFrameworkPath": [
+                "/System/Library/Frameworks",
+                "/Library/Frameworks"
+            ],
+            "intelliSenseMode": "macos-clang-arm64",
+            "compilerPath": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\bin\\Hostx64\\x64\\cl.exe",
+            "includePath": ["${myIncludePath}"],
+            "defines": ["${myDefines}"],
+            "cStandard": "c17",
+            "cppStandard": "c++17"
+        },
+        {
+            "name": "Win32",
+            "intelliSenseMode": "windows-msvc-x64",
+            "compilerPath": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\bin\\Hostx64\\x64\\cl.exe",
+            "includePath": ["${myIncludePath}"],
+            "defines": ["${myDefines}"],
+            "cStandard": "c17",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}

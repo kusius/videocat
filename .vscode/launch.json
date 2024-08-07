@@ -10,7 +10,7 @@
             },
             "stopAtEntry": false,
             "args": [
-                "night.mpg"
+                "https://samples.ffmpeg.org/MPEG2/mpegts-klv/Night%20Flight%20IR.mpg"
             ],
             "program": "${workspaceFolder}/build/videocat",
             "windows": {
