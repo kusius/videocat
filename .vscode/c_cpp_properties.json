@@ -1,9 +1,9 @@
 {
     "env": {
         "myIncludePath": [
-            "${workspaceFolder}/thirdparty",
-            "${workspaceFolder}/src",
-            "~/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg.Shared*/ffmpeg*/include"
+            "${workspaceFolder}/src/thirdparty/ffmpeg",
+            "${workspaceFolder}/src"
+        
         ],
         "myDefines": [
             

@@ -7,17 +7,17 @@
 static const uint8_t LDS_UNIVERSAL_KEY[16] = {0x06, 0x0e, 0x2b, 0x34, 0x02, 0x0b, 0x01, 0x01, 0x0e, 0x01, 0x03, 0x01, 0x01, 0x00, 0x00, 0x00};
 
 enum Format {
-  UINT8,
-  UINT16,
-  UINT32,
-  UINT64,
-  INT8,
-  INT16,
-  INT32,
-  INT64,
-  FLOAT,
-  DOUBLE,
-  CHAR_P,
+  UINT8_F,
+  UINT16_F,
+  UINT32_F,
+  UINT64_F,
+  INT8_F,
+  INT16_F,
+  INT32_F,
+  INT64_F,
+  FLOAT_F,
+  DOUBLE_F,
+  CHAR_P_F,
 };
 
 struct GenericValue {
@@ -155,946 +155,946 @@ static const struct Field FieldMap[94] = {
   // First one is dummy to align index with tag number
   {
     .key = CHECKSUM,
-    .encoded_format = UINT16,
-    .value_format = UINT16,
+    .encoded_format = UINT16_F,
+    .value_format = UINT16_F,
     .len = 2,
     .range = {
-      {UINT16, .uint16_value = 0},
-      {UINT16, .uint16_value = 65535}
+      {UINT16_F, .uint16_value = 0},
+      {UINT16_F, .uint16_value = 65535}
     },
   },
   {
     .key = CHECKSUM,
-    .encoded_format = UINT16,
-    .value_format = UINT16,
+    .encoded_format = UINT16_F,
+    .value_format = UINT16_F,
     .len = 2,
     .range = {
-      {UINT16, .uint16_value = 0},
-      {UINT16, .uint16_value = 65535}
+      {UINT16_F, .uint16_value = 0},
+      {UINT16_F, .uint16_value = 65535}
     },
   },
   {
     .key = UNIX_TIME_STAMP,
-    .encoded_format = UINT64,
-    .value_format = UINT64,
+    .encoded_format = UINT64_F,
+    .value_format = UINT64_F,
     .len = 8,
     .range = {
-      {UINT64, .uint64_value = 0},
-      {UINT64, .uint64_value = 18446744073709551615U}
+      {UINT64_F, .uint64_value = 0},
+      {UINT64_F, .uint64_value = 18446744073709551615U}
     },
   },
   {
     .key = MISSION_ID,
-    .value_format = CHAR_P,
-    .encoded_format = CHAR_P,
+    .value_format = CHAR_P_F,
+    .encoded_format = CHAR_P_F,
     .len = 127,
     .range = {
-      {UINT8, .uint8_value = 0},
-      {UINT8, .uint8_value = 127}
+      {UINT8_F, .uint8_value = 0},
+      {UINT8_F, .uint8_value = 127}
     },
   },
   {
     .key = PLATFORM_TAIL_NUMBER,
-    .value_format = CHAR_P,
-    .encoded_format = CHAR_P,
+    .value_format = CHAR_P_F,
+    .encoded_format = CHAR_P_F,
     .len = 127,
     .range = {
-      {UINT8, .uint8_value = 0},
-      {UINT8, .uint8_value = 127}
+      {UINT8_F, .uint8_value = 0},
+      {UINT8_F, .uint8_value = 127}
     },
   },
   {
     .key = PLATFORM_HEADING_ANGLE,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = 0},
-      {FLOAT, .float_value = 360}
+      {FLOAT_F, .float_value = 0},
+      {FLOAT_F, .float_value = 360}
     },
   },
   {
     .key = PLATFORM_PITCH_ANGLE,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -20},
-      {FLOAT, .float_value = 20}
+      {FLOAT_F, .float_value = -20},
+      {FLOAT_F, .float_value = 20}
     },
   },
   {
     .key = PLATFORM_ROLL_ANGLE,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -50},
-      {FLOAT, .float_value = 50}
+      {FLOAT_F, .float_value = -50},
+      {FLOAT_F, .float_value = 50}
     },
   },
   {
     .key = PLATFORM_TRUE_AIRSPEED,
-    .value_format = UINT8,
-    .encoded_format = UINT8,
+    .value_format = UINT8_F,
+    .encoded_format = UINT8_F,
     .len = 1,
     .range = {
-      {UINT8, .uint8_value = 0},
-      {UINT8, .uint8_value = 255}
+      {UINT8_F, .uint8_value = 0},
+      {UINT8_F, .uint8_value = 255}
     },
   },
   {
     .key = PLATFORM_INDICATED_AIRSPEED,
-    .value_format = UINT8,
-    .encoded_format = UINT8,
+    .value_format = UINT8_F,
+    .encoded_format = UINT8_F,
     .len = 1,
     .range = {
-      {UINT8, .uint8_value = 0},
-      {UINT8, .uint8_value = 255}
+      {UINT8_F, .uint8_value = 0},
+      {UINT8_F, .uint8_value = 255}
     },
   },
   {
     .key = PLATFORM_DESIGNATION,
-    .value_format = CHAR_P,
-    .encoded_format = CHAR_P,
+    .value_format = CHAR_P_F,
+    .encoded_format = CHAR_P_F,
     .len = 127,
     .range = {
-      {UINT8, .uint8_value = 0},
-      {UINT8, .uint8_value = 127}
+      {UINT8_F, .uint8_value = 0},
+      {UINT8_F, .uint8_value = 127}
     },
   },
   {
     .key = IMAGE_SOURCE_SENSOR,
-    .value_format = CHAR_P,
-    .encoded_format = CHAR_P,
+    .value_format = CHAR_P_F,
+    .encoded_format = CHAR_P_F,
     .len = 127,
     .range = {
-      {UINT8, .uint8_value = 0},
-      {UINT8, .uint8_value = 127}
+      {UINT8_F, .uint8_value = 0},
+      {UINT8_F, .uint8_value = 127}
     },
   },
   {
     .key = IMAGE_COORDINATE_SYSTEM,
-    .value_format = CHAR_P,
-    .encoded_format = CHAR_P,
+    .value_format = CHAR_P_F,
+    .encoded_format = CHAR_P_F,
     .len = 127,
     .range = {
-      {UINT8, .uint8_value = 0},
-      {UINT8, .uint8_value = 127}
+      {UINT8_F, .uint8_value = 0},
+      {UINT8_F, .uint8_value = 127}
     },
   },
   {
     .key = SENSOR_LATITUDE,
-    .value_format = DOUBLE,
-    .encoded_format = INT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = INT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = -90},
-      {DOUBLE, .double_value = 90}
+      {DOUBLE_F, .double_value = -90},
+      {DOUBLE_F, .double_value = 90}
     },
   },
   {
     .key = SENSOR_LONGITUDE,
-    .value_format = DOUBLE,
-    .encoded_format = INT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = INT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = -180},
-      {DOUBLE, .double_value = 180}
+      {DOUBLE_F, .double_value = -180},
+      {DOUBLE_F, .double_value = 180}
     },
   },
   {
     .key = SENSOR_TRUE_ALTITUDE,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {DOUBLE, .double_value = -900},
-      {DOUBLE, .double_value = 19000}
+      {DOUBLE_F, .double_value = -900},
+      {DOUBLE_F, .double_value = 19000}
     },
   },
   {
     .key = SENSOR_HORIZONTAL_FOV,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {DOUBLE, .double_value = 0},
-      {DOUBLE, .double_value = 180}
+      {DOUBLE_F, .double_value = 0},
+      {DOUBLE_F, .double_value = 180}
     },
   },
   {
     .key = SENSOR_VERTICAL_FOV,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {DOUBLE, .double_value = 0},
-      {DOUBLE, .double_value = 180}
+      {DOUBLE_F, .double_value = 0},
+      {DOUBLE_F, .double_value = 180}
     },
   },
   {
     .key = SENSOR_RELATIVE_AZIMUTH_ANGLE,
-    .value_format = DOUBLE,
-    .encoded_format = UINT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = UINT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = 0},
-      {DOUBLE, .double_value = 360}
+      {DOUBLE_F, .double_value = 0},
+      {DOUBLE_F, .double_value = 360}
     },
   },
   {
     .key = SENSOR_RELATIVE_ELEVATION_ANGLE,
-    .value_format = DOUBLE,
-    .encoded_format = INT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = INT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = -180},
-      {DOUBLE, .double_value = 180}
+      {DOUBLE_F, .double_value = -180},
+      {DOUBLE_F, .double_value = 180}
     },
   },
   {
     .key = SENSOR_RELATIVE_ROLL_ANGLE,
-    .value_format = DOUBLE,
-    .encoded_format = UINT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = UINT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = 0},
-      {DOUBLE, .double_value = 360}
+      {DOUBLE_F, .double_value = 0},
+      {DOUBLE_F, .double_value = 360}
     },
   },
   {
     .key = SLANT_RANGE,
-    .value_format = FLOAT,
-    .encoded_format = UINT32,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = 0},
-      {DOUBLE, .double_value = 5000000}
+      {DOUBLE_F, .double_value = 0},
+      {DOUBLE_F, .double_value = 5000000}
     },
   },
   {
     .key = TARGET_WIDTH,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = 0},
-      {FLOAT, .float_value = 10000}
+      {FLOAT_F, .float_value = 0},
+      {FLOAT_F, .float_value = 10000}
     },
   },
   {
     .key = FRAME_CENTER_LATITUDE,
-    .value_format = DOUBLE,
-    .encoded_format = INT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = INT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = -90},
-      {DOUBLE, .double_value = 90}
+      {DOUBLE_F, .double_value = -90},
+      {DOUBLE_F, .double_value = 90}
     },
   },
   {
     .key = FRAME_CENTER_LONGITUDE,
-    .value_format = DOUBLE,
-    .encoded_format = INT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = INT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = -180},
-      {DOUBLE, .double_value = 180}
+      {DOUBLE_F, .double_value = -180},
+      {DOUBLE_F, .double_value = 180}
     },
   },
   {
     .key = FRAME_CENTER_ELEVATION,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -900},
-      {FLOAT, .float_value = 19000}
+      {FLOAT_F, .float_value = -900},
+      {FLOAT_F, .float_value = 19000}
     },
   },
   {
     .key = OFFSET_CORNER_LATITUDE_POINT_1,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -0.075},
-      {FLOAT, .float_value = 0.075}
+      {FLOAT_F, .float_value = -0.075},
+      {FLOAT_F, .float_value = 0.075}
     },
   },
   {
     .key = OFFSET_CORNER_LONGITUDE_POINT_1,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -0.075},
-      {FLOAT, .float_value = 0.075}
+      {FLOAT_F, .float_value = -0.075},
+      {FLOAT_F, .float_value = 0.075}
     },
   },
   {
     .key = OFFSET_CORNER_LATITUDE_POINT_2,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -0.075},
-      {FLOAT, .float_value = 0.075}
+      {FLOAT_F, .float_value = -0.075},
+      {FLOAT_F, .float_value = 0.075}
     },
   },
   {
     .key = OFFSET_CORNER_LONGITUDE_POINT_2,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -0.075},
-      {FLOAT, .float_value = 0.075}
+      {FLOAT_F, .float_value = -0.075},
+      {FLOAT_F, .float_value = 0.075}
     },
   },
   {
     .key = OFFSET_CORNER_LATITUDE_POINT_3,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -0.075},
-      {FLOAT, .float_value = 0.075}
+      {FLOAT_F, .float_value = -0.075},
+      {FLOAT_F, .float_value = 0.075}
     },
   },
   {
     .key = OFFSET_CORNER_LONGITUDE_POINT_3,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -0.075},
-      {FLOAT, .float_value = 0.075}
+      {FLOAT_F, .float_value = -0.075},
+      {FLOAT_F, .float_value = 0.075}
     },
   },
   {
     .key = OFFSET_CORNER_LATITUDE_POINT_4,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -0.075},
-      {FLOAT, .float_value = 0.075}
+      {FLOAT_F, .float_value = -0.075},
+      {FLOAT_F, .float_value = 0.075}
     },
   },
   {
     .key = OFFSET_CORNER_LONGITUDE_POINT_4,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -0.075},
-      {FLOAT, .float_value = 0.075}
+      {FLOAT_F, .float_value = -0.075},
+      {FLOAT_F, .float_value = 0.075}
     },
   },
   {
     .key = ICING_DETECTED,
-    .value_format = UINT8,
-    .encoded_format = UINT8,
+    .value_format = UINT8_F,
+    .encoded_format = UINT8_F,
     .len = 1,
     .range = {
-      {UINT8, .uint8_value = 0},
-      {UINT8, .uint8_value = 255}
+      {UINT8_F, .uint8_value = 0},
+      {UINT8_F, .uint8_value = 255}
     },
   },
   {
     .key = WIND_DIRECTION,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = 0},
-      {FLOAT, .float_value = 360}
+      {FLOAT_F, .float_value = 0},
+      {FLOAT_F, .float_value = 360}
     },
   },
   {
     .key = WIND_SPEED,
-    .value_format = FLOAT,
-    .encoded_format = UINT8,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT8_F,
     .len = 1,
     .range = {
-      {FLOAT, .float_value = 0},
-      {FLOAT, .float_value = 100}
+      {FLOAT_F, .float_value = 0},
+      {FLOAT_F, .float_value = 100}
     },
   },
   {
     .key = STATIC_PRESSURE,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = 0},
-      {FLOAT, .float_value = 5000}
+      {FLOAT_F, .float_value = 0},
+      {FLOAT_F, .float_value = 5000}
     },
   },
   {
     .key = DENSITY_ALTITUDE,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -900},
-      {FLOAT, .float_value = 19000}
+      {FLOAT_F, .float_value = -900},
+      {FLOAT_F, .float_value = 19000}
     },
   },
   {
     .key = OUTSIDE_AIR_TEMPERATURE,
-    .value_format = INT8,
-    .encoded_format = INT8,
+    .value_format = INT8_F,
+    .encoded_format = INT8_F,
     .len = 1,
     .range = {
-      {INT8, .int8_value = -128},
-      {INT8, .int8_value = 127}
+      {INT8_F, .int8_value = -128},
+      {INT8_F, .int8_value = 127}
     },
   },
   {
     .key = TARGET_LOCATION_LATITUDE,
-    .value_format = DOUBLE,
-    .encoded_format = INT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = INT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = -90},
-      {DOUBLE, .double_value = 90}
+      {DOUBLE_F, .double_value = -90},
+      {DOUBLE_F, .double_value = 90}
     },
   },
   {
     .key = TARGET_LOCATION_LONGITUDE,
-    .value_format = DOUBLE,
-    .encoded_format = INT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = INT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = -180},
-      {DOUBLE, .double_value = 180}
+      {DOUBLE_F, .double_value = -180},
+      {DOUBLE_F, .double_value = 180}
     },
   },
   {
     .key = TARGET_LOCATION_ELEVATION,
-    .value_format = FLOAT,
-    .encoded_format = INT16,
+    .value_format = FLOAT_F,
+    .encoded_format = INT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -900},
-      {FLOAT, .float_value = 19000}
+      {FLOAT_F, .float_value = -900},
+      {FLOAT_F, .float_value = 19000}
     },
   },
   {
     .key = TARGET_TRACK_GATE_WIDTH,
-    .value_format = UINT8,
-    .encoded_format = UINT8,
+    .value_format = UINT8_F,
+    .encoded_format = UINT8_F,
     .len = 1,
     .range = {
-      {UINT16, .uint16_value = 0},
-      {UINT16, .uint16_value = 512}
+      {UINT16_F, .uint16_value = 0},
+      {UINT16_F, .uint16_value = 512}
     },
   },
   {
     .key = TARGET_TRACK_GATE_HEIGHT,
-    .value_format = UINT8,
-    .encoded_format = UINT8,
+    .value_format = UINT8_F,
+    .encoded_format = UINT8_F,
     .len = 1,
     .range = {
-      {UINT16, .uint16_value = 0},
-      {UINT16, .uint16_value = 512}
+      {UINT16_F, .uint16_value = 0},
+      {UINT16_F, .uint16_value = 512}
     },
   },
   {
     .key = TARGET_ERROR_ESTIMATE_CE90,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = 0},
-      {FLOAT, .float_value = 4095}
+      {FLOAT_F, .float_value = 0},
+      {FLOAT_F, .float_value = 4095}
     },
   },
   {
     .key = TARGET_ERROR_ESTIMATE_LE90,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = 0},
-      {FLOAT, .float_value = 4095}
+      {FLOAT_F, .float_value = 0},
+      {FLOAT_F, .float_value = 4095}
     },
   },
   {
     .key = GENERIC_FLAG_DATA1,
-    .value_format = UINT8,
-    .encoded_format = UINT8,
+    .value_format = UINT8_F,
+    .encoded_format = UINT8_F,
     .len = 1,
     .range = {
-      {FLOAT, .float_value = 0},
-      {FLOAT, .float_value = 255}
+      {FLOAT_F, .float_value = 0},
+      {FLOAT_F, .float_value = 255}
     },
   },
   // TODO really not ready to be used, information are dummies
   {
     .key = SECURITY_LOCAL_METADATA_SET,
-    .value_format = UINT8,
-    .encoded_format = UINT8,
+    .value_format = UINT8_F,
+    .encoded_format = UINT8_F,
     .len = 1,
     .range = {
-      {FLOAT, .float_value = 0},
-      {FLOAT, .float_value = 255}
+      {FLOAT_F, .float_value = 0},
+      {FLOAT_F, .float_value = 255}
     },
   },
   {
     .key = DIFFERENTIAL_PRESSURE,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = 0},
-      {FLOAT, .float_value = 5000}
+      {FLOAT_F, .float_value = 0},
+      {FLOAT_F, .float_value = 5000}
     },
   },
   {
     .key = PLATFORM_ANGLE_OF_ATTACK,
-    .value_format = FLOAT,
-    .encoded_format = INT16,
+    .value_format = FLOAT_F,
+    .encoded_format = INT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -20},
-      {FLOAT, .float_value = 20}
+      {FLOAT_F, .float_value = -20},
+      {FLOAT_F, .float_value = 20}
     },
   },
   {
     .key = PLATFORM_VERTICAL_SPEED,
-    .value_format = FLOAT,
-    .encoded_format = INT16,
+    .value_format = FLOAT_F,
+    .encoded_format = INT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -180},
-      {FLOAT, .float_value = 180}
+      {FLOAT_F, .float_value = -180},
+      {FLOAT_F, .float_value = 180}
     },
   },
   {
     .key = PLATFORM_SIDESLIP_ANGLE,
-    .value_format = FLOAT,
-    .encoded_format = INT16,
+    .value_format = FLOAT_F,
+    .encoded_format = INT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -20},
-      {FLOAT, .float_value = 20}
+      {FLOAT_F, .float_value = -20},
+      {FLOAT_F, .float_value = 20}
     },
   },
   {
     .key = AIRFIELD_BAROMETRIC_PRESSURE,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = 0},
-      {FLOAT, .float_value = 5000}
+      {FLOAT_F, .float_value = 0},
+      {FLOAT_F, .float_value = 5000}
     },
   },
   {
     .key = AIRFIELD_ELEVATION,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -900},
-      {FLOAT, .float_value = 19000}
+      {FLOAT_F, .float_value = -900},
+      {FLOAT_F, .float_value = 19000}
     },
   },
   {
     .key = RELATIVE_HUMIDITY,
-    .value_format = FLOAT,
-    .encoded_format = UINT8,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT8_F,
     .len = 1,
     .range = {
-      {FLOAT, .float_value = 0},
-      {FLOAT, .float_value = 100}
+      {FLOAT_F, .float_value = 0},
+      {FLOAT_F, .float_value = 100}
     },
   },
   {
     .key = PLATFORM_GROUND_SPEED,
-    .value_format = UINT8,
-    .encoded_format = UINT8,
+    .value_format = UINT8_F,
+    .encoded_format = UINT8_F,
     .len = 1,
     .range = {
-      {FLOAT, .float_value = 0},
-      {FLOAT, .float_value = 255}
+      {FLOAT_F, .float_value = 0},
+      {FLOAT_F, .float_value = 255}
     },
   },
   {
     .key = GROUND_RANGE,
-    .value_format = DOUBLE,
-    .encoded_format = UINT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = UINT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = 0},
-      {DOUBLE, .double_value = 5000000}
+      {DOUBLE_F, .double_value = 0},
+      {DOUBLE_F, .double_value = 5000000}
     },
   },
   {
     .key = PLATFORM_FUEL_REMAINING,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {DOUBLE, .double_value = 0},
-      {DOUBLE, .double_value = 10000}
+      {DOUBLE_F, .double_value = 0},
+      {DOUBLE_F, .double_value = 10000}
     },
   },
   {
     .key = PLATFORM_CALL_SIGN,
-    .value_format = CHAR_P,
-    .encoded_format = CHAR_P,
+    .value_format = CHAR_P_F,
+    .encoded_format = CHAR_P_F,
     .len = 127,
     .range = {
-      {UINT8, .uint8_value = 1},
-      {UINT8, .uint8_value = 127}
+      {UINT8_F, .uint8_value = 1},
+      {UINT8_F, .uint8_value = 127}
     },
   },
   {
     .key = WEAPON_LOAD,
-    .value_format = UINT16,
-    .encoded_format = UINT16,
+    .value_format = UINT16_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {UINT16, .uint16_value = 0},
-      {UINT16, .uint16_value = 65535}
+      {UINT16_F, .uint16_value = 0},
+      {UINT16_F, .uint16_value = 65535}
     },
   },
   {
     .key = WEAPON_FIRED,
-    .value_format = UINT16,
-    .encoded_format = UINT16,
+    .value_format = UINT16_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {UINT16, .uint16_value = 0},
-      {UINT16, .uint16_value = 65535}
+      {UINT16_F, .uint16_value = 0},
+      {UINT16_F, .uint16_value = 65535}
     },
   },
   {
     .key = LASER_PRF_CODE,
-    .value_format = UINT16,
-    .encoded_format = UINT16,
+    .value_format = UINT16_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {UINT16, .uint16_value = 0},
-      {UINT16, .uint16_value = 65535}
+      {UINT16_F, .uint16_value = 0},
+      {UINT16_F, .uint16_value = 65535}
     },
   },
   {
     .key = SENSOR_FOV_NAME,
-    .value_format = UINT8,
-    .encoded_format = UINT8,
+    .value_format = UINT8_F,
+    .encoded_format = UINT8_F,
     .len = 1,
     .range = {
-      {UINT8, .uint8_value = 0},
-      {UINT8, .uint8_value = 255}
+      {UINT8_F, .uint8_value = 0},
+      {UINT8_F, .uint8_value = 255}
     },
   },
   {
     .key = PLATFORM_MAGNETIC_HEADING,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {UINT16, .uint16_value = 0},
-      {UINT16, .uint16_value = 360}
+      {UINT16_F, .uint16_value = 0},
+      {UINT16_F, .uint16_value = 360}
     },
   },
   {
     .key = UAS_LDS_VERSION_NUMBER,
-    .value_format = UINT8,
-    .encoded_format = UINT8,
+    .value_format = UINT8_F,
+    .encoded_format = UINT8_F,
     .len = 1,
     .range = {
-      {UINT8, .uint8_value = 0},
-      {UINT8, .uint8_value = 255}
+      {UINT8_F, .uint8_value = 0},
+      {UINT8_F, .uint8_value = 255}
     },
   },
   // Parameters unused in the MISB0601.6
   {
     .key = TARGET_LOCATION_COVARIANCE_MATRIX,
-    .value_format = UINT8,
-    .encoded_format = UINT8,
+    .value_format = UINT8_F,
+    .encoded_format = UINT8_F,
     .len = 1,
     .range = {
-      {UINT8, .uint8_value = 0},
-      {UINT8, .uint8_value = 255}
+      {UINT8_F, .uint8_value = 0},
+      {UINT8_F, .uint8_value = 255}
     },
   },
   {
     .key = ALTERNATE_PLATFORM_LATITUDE,
-    .value_format = DOUBLE,
-    .encoded_format = INT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = INT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = -90},
-      {DOUBLE, .double_value = 90}
+      {DOUBLE_F, .double_value = -90},
+      {DOUBLE_F, .double_value = 90}
     },
   },
   {
     .key = ALTERNATE_PLATFORM_LONGITUDE,
-    .value_format = DOUBLE,
-    .encoded_format = INT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = INT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = -180},
-      {DOUBLE, .double_value = 180}
+      {DOUBLE_F, .double_value = -180},
+      {DOUBLE_F, .double_value = 180}
     },
   },
   {
     .key = ALTERNATE_PLATFORM_ALTITUDE,
-    .value_format = FLOAT,
-    .encoded_format = INT16,
+    .value_format = FLOAT_F,
+    .encoded_format = INT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -900},
-      {FLOAT, .float_value = 19000}
+      {FLOAT_F, .float_value = -900},
+      {FLOAT_F, .float_value = 19000}
     },
   },
   {
     .key = ALTERNATE_PLATFORM_NAME,
-    .value_format = CHAR_P,
-    .encoded_format = CHAR_P,
+    .value_format = CHAR_P_F,
+    .encoded_format = CHAR_P_F,
     .len = 127,
     .range = {
-      {UINT8, .uint8_value = 1},
-      {UINT8, .uint8_value = 127}
+      {UINT8_F, .uint8_value = 1},
+      {UINT8_F, .uint8_value = 127}
     },
   },
   {
     .key = ALTERNATE_PLATFORM_HEADING,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = 0},
-      {FLOAT, .float_value = 360}
+      {FLOAT_F, .float_value = 0},
+      {FLOAT_F, .float_value = 360}
     },
   },
   {
     .key = EVENT_START_TIME_UTC,
-    .value_format = UINT64,
-    .encoded_format = UINT64,
+    .value_format = UINT64_F,
+    .encoded_format = UINT64_F,
     .len = 4,
     .range = {
-      {UINT64, .uint64_value = 0},
-      {UINT64, .uint64_value = 18446744073709551615U}
+      {UINT64_F, .uint64_value = 0},
+      {UINT64_F, .uint64_value = 18446744073709551615U}
     },
   },
   // TODO this parameter is not handled
   {
     .key = RVT_LOCAL_DATA_SET,
-    .value_format = UINT8,
-    .encoded_format = UINT8,
+    .value_format = UINT8_F,
+    .encoded_format = UINT8_F,
     .len = 1,
     .range = {
-      {UINT8, .uint8_value = 0},
-      {UINT8, .uint8_value = 255}
+      {UINT8_F, .uint8_value = 0},
+      {UINT8_F, .uint8_value = 255}
     },
   },
   // TODO this parameter is not handled
   {
     .key = VMTI_LOCAL_DATA_SET,
-    .value_format = UINT8,
-    .encoded_format = UINT8,
+    .value_format = UINT8_F,
+    .encoded_format = UINT8_F,
     .len = 1,
     .range = {
-      {UINT8, .uint8_value = 0},
-      {UINT8, .uint8_value = 255}
+      {UINT8_F, .uint8_value = 0},
+      {UINT8_F, .uint8_value = 255}
     },
   },
   {
     .key = SENSOR_ELLIPSOID_HEIGHT,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -900},
-      {FLOAT, .float_value = 19000}
+      {FLOAT_F, .float_value = -900},
+      {FLOAT_F, .float_value = 19000}
     },
   },
   {
     .key = ALTERNATE_PLATFORM_ELLIPSOID_HEIGHT,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -900},
-      {FLOAT, .float_value = 19000}
+      {FLOAT_F, .float_value = -900},
+      {FLOAT_F, .float_value = 19000}
     },
   },
   {
     .key = OPERATIONAL_MODE,
-    .value_format = UINT8,
-    .encoded_format = UINT8,
+    .value_format = UINT8_F,
+    .encoded_format = UINT8_F,
     .len = 1,
     .range = {
-      {UINT8, .uint8_value = 0},
-      {UINT8, .uint8_value = 255}
+      {UINT8_F, .uint8_value = 0},
+      {UINT8_F, .uint8_value = 255}
     },
   },
   {
     .key = FRAME_CENTER_HEIGHT_ABOVE_ELLIPSOID,
-    .value_format = FLOAT,
-    .encoded_format = UINT16,
+    .value_format = FLOAT_F,
+    .encoded_format = UINT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -900},
-      {FLOAT, .float_value = 19000}
+      {FLOAT_F, .float_value = -900},
+      {FLOAT_F, .float_value = 19000}
     },
   },
   {
     .key = SENSOR_NORTH_VELOCITY,
-    .value_format = FLOAT,
-    .encoded_format = INT16,
+    .value_format = FLOAT_F,
+    .encoded_format = INT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -357},
-      {FLOAT, .float_value = 357}
+      {FLOAT_F, .float_value = -357},
+      {FLOAT_F, .float_value = 357}
     },
   },
   {
     .key = SENSOR_EAST_VELOCITY,
-    .value_format = FLOAT,
-    .encoded_format = INT16,
+    .value_format = FLOAT_F,
+    .encoded_format = INT16_F,
     .len = 2,
     .range = {
-      {FLOAT, .float_value = -357},
-      {FLOAT, .float_value = 357}
+      {FLOAT_F, .float_value = -357},
+      {FLOAT_F, .float_value = 357}
     },
   },
   {
     .key = IMAGE_HORIZON_PIXEL_PACK,
-    .value_format = UINT8,
-    .encoded_format = UINT8,
+    .value_format = UINT8_F,
+    .encoded_format = UINT8_F,
     .len = 1,
     .range = {
-      {UINT8, .uint8_value = 0},
-      {UINT8, .uint8_value = 255}
+      {UINT8_F, .uint8_value = 0},
+      {UINT8_F, .uint8_value = 255}
     },
   },
   {
     .key = CORNER_LATITUDE_POINT_1,
-    .value_format = DOUBLE,
-    .encoded_format = INT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = INT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = -90},
-      {DOUBLE, .double_value = 90}
+      {DOUBLE_F, .double_value = -90},
+      {DOUBLE_F, .double_value = 90}
     },
   },
   {
     .key = CORNER_LONGITUDE_POINT_1,
-    .value_format = DOUBLE,
-    .encoded_format = INT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = INT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = -180},
-      {DOUBLE, .double_value = 180}
+      {DOUBLE_F, .double_value = -180},
+      {DOUBLE_F, .double_value = 180}
     },
   },
   {
     .key = CORNER_LATITUDE_POINT_2,
-    .value_format = DOUBLE,
-    .encoded_format = INT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = INT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = -90},
-      {DOUBLE, .double_value = 90}
+      {DOUBLE_F, .double_value = -90},
+      {DOUBLE_F, .double_value = 90}
     },
   },
   {
     .key = CORNER_LONGITUDE_POINT_3,
-    .value_format = DOUBLE,
-    .encoded_format = INT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = INT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = -180},
-      {DOUBLE, .double_value = 180}
+      {DOUBLE_F, .double_value = -180},
+      {DOUBLE_F, .double_value = 180}
     },
   },
   {
     .key = CORNER_LATITUDE_POINT_4,
-    .value_format = DOUBLE,
-    .encoded_format = INT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = INT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = -90},
-      {DOUBLE, .double_value = 90}
+      {DOUBLE_F, .double_value = -90},
+      {DOUBLE_F, .double_value = 90}
     },
   },
   {
     .key = CORNER_LONGITUDE_POINT_4,
-    .value_format = DOUBLE,
-    .encoded_format = INT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = INT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = -180},
-      {DOUBLE, .double_value = 180}
+      {DOUBLE_F, .double_value = -180},
+      {DOUBLE_F, .double_value = 180}
     },
   },
   {
     .key = CORNER_LATITUDE_POINT_1,
-    .value_format = DOUBLE,
-    .encoded_format = INT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = INT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = -90},
-      {DOUBLE, .double_value = 90}
+      {DOUBLE_F, .double_value = -90},
+      {DOUBLE_F, .double_value = 90}
     },
   },
   {
     .key = CORNER_LONGITUDE_POINT_1,
-    .value_format = DOUBLE,
-    .encoded_format = INT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = INT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = -180},
-      {DOUBLE, .double_value = 180}
+      {DOUBLE_F, .double_value = -180},
+      {DOUBLE_F, .double_value = 180}
     },
   },
   {
     .key = PLATFORM_PITCH_ANGLE_F,
-    .value_format = DOUBLE,
-    .encoded_format = INT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = INT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = -90},
-      {DOUBLE, .double_value = 90}
+      {DOUBLE_F, .double_value = -90},
+      {DOUBLE_F, .double_value = 90}
     },
   },
   {
     .key = PLATFORM_ROLL_ANGLE_F,
-    .value_format = DOUBLE,
-    .encoded_format = INT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = INT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = -90},
-      {DOUBLE, .double_value = 90}
+      {DOUBLE_F, .double_value = -90},
+      {DOUBLE_F, .double_value = 90}
     },
   },
   {
     .key = PLATFORM_ANGLE_OF_ATTACK,
-    .value_format = DOUBLE,
-    .encoded_format = INT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = INT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = -90},
-      {DOUBLE, .double_value = 90}
+      {DOUBLE_F, .double_value = -90},
+      {DOUBLE_F, .double_value = 90}
     },
   },
   {
     .key = PLATFORM_SIDESLIP_ANGLE_F,
-    .value_format = DOUBLE,
-    .encoded_format = INT32,
+    .value_format = DOUBLE_F,
+    .encoded_format = INT32_F,
     .len = 4,
     .range = {
-      {DOUBLE, .double_value = -180},
-      {DOUBLE, .double_value = 180}
+      {DOUBLE_F, .double_value = -180},
+      {DOUBLE_F, .double_value = 180}
     },
   }
 };

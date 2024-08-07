@@ -70,7 +70,7 @@ struct GenericValue decode_value(const struct Field field, unsigned char *value,
   {
     switch (field.encoded_format)
     {
-    case UINT16:
+    case UINT16_F:
       offset.foffset = (field.range.min.float_value < 0) ? -field.range.min.float_value : 0;
       result.float_value = int16_to_unsigned_dec((unsigned short)*value,
                                                   fabs(field.range.min.float_value) +
@@ -78,7 +78,7 @@ struct GenericValue decode_value(const struct Field field, unsigned char *value,
                                                   offset.foffset);
       return result;
 
-    case UINT32:
+    case UINT32_F:
       offset.doffset = (field.range.min.double_value < 0) ? -field.range.min.double_value : 0;
       result.double_value = int32_to_unsigned_dec((int)*value,
                                                   fabs(field.range.min.double_value) +
@@ -86,13 +86,13 @@ struct GenericValue decode_value(const struct Field field, unsigned char *value,
                                                   offset.doffset);
       return result;
 
-    case INT16:
+    case INT16_F:
       result.float_value = int16_to_signed_dec((unsigned)*value,
                                                 fabs(field.range.min.float_value) +
                                                 fabs(field.range.max.float_value));
       return result;
 
-    case INT32:
+    case INT32_F:
       result.double_value = int32_to_signed_dec((int)*value,
                                                 fabs(field.range.min.double_value) +
                                                 fabs(field.range.max.double_value));
@@ -107,31 +107,31 @@ struct GenericValue decode_value(const struct Field field, unsigned char *value,
   {
     switch (field.value_format)
     {
-    case UINT8:
+    case UINT8_F:
       result.uint8_value = (uint8_t)*value;
       return result;
-    case UINT16:
+    case UINT16_F:
       result.uint8_value = (uint16_t)*value;
       return result;
-    case UINT32:
+    case UINT32_F:
       result.uint8_value = (uint32_t)*value;
       return result;
-    case UINT64:
+    case UINT64_F:
       result.uint8_value = (uint64_t)*value;
       return result;
-    case INT8:
+    case INT8_F:
       result.uint8_value = (int8_t)*value;
       return result;
-    case INT16:
+    case INT16_F:
       result.uint8_value = (int16_t)*value;
       return result;
-    case INT32:
+    case INT32_F:
       result.uint8_value = (int32_t)*value;
       return result;
-    case INT64:
+    case INT64_F:
       result.int64_value = (int64_t)*value;
       return result;
-    case CHAR_P:
+    case CHAR_P_F:
       result.charp_value = malloc((size + 1) * sizeof(char));
       memcpy(result.charp_value, (char *)value, size);
       result.charp_value[size] = '\0';

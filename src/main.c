@@ -6,6 +6,7 @@
 #include <libavcodec/avcodec.h>
 #include "utils.h"
 #include "thirdparty/libmisb/include/unpack.h"
+#include "ui.h"
 
 static void setup() {
     printf("Initializing\n");
@@ -31,26 +32,11 @@ static void printMetadata(const AVFormatContext *formatContext) {
     }
 }
 
-static void printInfo(const AVFormatContext *formatContext) {
-    fprintf(stdout, "Name: %s\n", formatContext->url);
-    fprintf(stdout, "Duration: %lld\n", formatContext->duration);
-
-    const AVCodecDescriptor *videoDescriptor = avcodec_descriptor_get(formatContext->video_codec_id);
-    if(videoDescriptor != NULL) {
-        fprintf(stdout, "Codec (video): %s", videoDescriptor->name);
-    }
-
-    const AVCodecDescriptor *audioDescriptor = avcodec_descriptor_get(formatContext->audio_codec_id);
-    if(audioDescriptor != NULL) {
-        fprintf(stdout, "Codec (audio): %s", audioDescriptor->name);
-    }
-}
-
 static int openCodecContext(int *outStreamIndex, AVCodecContext **outCodecContext, AVFormatContext *formatContext, enum AVMediaType type) {
     int result, streamIndex;
     AVStream *stream;
     const AVCodec *decoder = NULL;
-    
+
     result = av_find_best_stream(formatContext, type, -1, -1, NULL, 0);
     if(result < 0) {
         fprintf(stderr, "Could not find %s stream in input file '%s'\n", av_get_media_type_string(type), formatContext->url);
@@ -90,6 +76,10 @@ int main(int argc, char** argv) {
         fprintf(stderr, "Usage %s url/file\n", argv[0]);
         shutdown(-1);
     }
+
+    ApplicationState applicationState = createApplication("VideoCat", 800, 600);
+
+    runApplication(&applicationState);
 
     char fileName[500];
     strcpy(fileName, argv[1]);

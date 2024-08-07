@@ -23,26 +23,6 @@ const char *av_get_media_type_string(enum AVMediaType media_type) {
     }
 }
 
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
-
-    void *allocateMemory(size_t bytes) {
-        return CoTaskMemAlloc(bytes);
-    }
-
-    void freeMemory(void *address) {
-        CoTaskMemFree(address);
-    }
-#else
-    void *allocateMemory(size_t bytes) {
-        return malloc(bytes);
-    }
-
-    void freeMemory(void *address) {
-        free(address);
-    }
-#endif
-
-
 char *getTagName(const enum Tags tag) {
   switch (tag)
   {
@@ -336,37 +316,37 @@ void printValue(const struct GenericValue format) {
 
   switch (format.type)
   {
-  case UINT8:
+  case UINT8_F:
     fprintf(stdout, "%d", format.uint8_value);
     break;
-  case UINT16:
+  case UINT16_F:
     fprintf(stdout, "%d", format.uint16_value);
     break;
-  case UINT32:
+  case UINT32_F:
     fprintf(stdout, "%d", format.uint32_value);
     break;
-  case UINT64:
+  case UINT64_F:
     fprintf(stdout, "%llu", format.uint64_value);
     break;
-  case INT8:
+  case INT8_F:
     fprintf(stdout, "%d", format.int8_value);
     break;
-  case INT16:
+  case INT16_F:
     fprintf(stdout, "%d", format.int16_value);
     break;
-  case INT32:
+  case INT32_F:
     fprintf(stdout, "%d", format.int32_value);
     break;
-  case INT64:
+  case INT64_F:
     fprintf(stdout, "%lld", format.int64_value);
     break;
-  case FLOAT:
+  case FLOAT_F:
     fprintf(stdout, "%f", format.float_value);
     break;
-  case DOUBLE:
+  case DOUBLE_F:
     fprintf(stdout, "%lf", format.double_value);
     break;
-  case CHAR_P:
+  case CHAR_P_F:
     fprintf(stdout, "%s", format.charp_value);
     break;
   default:
@@ -378,37 +358,37 @@ void printValue(const struct GenericValue format) {
 char *getTypeName(const enum Format format) {
   switch (format)
   {
-  case UINT8:
+  case UINT8_F:
     return "UINT 8";
     break;
-  case UINT16:
+  case UINT16_F:
     return "UINT 16";
     break;
-  case UINT32:
+  case UINT32_F:
     return "UINT 32";
     break;
-  case UINT64:
+  case UINT64_F:
     return "UINT 64";
     break;
-  case INT8:
+  case INT8_F:
     return "INT 8";
     break;
-  case INT16:
+  case INT16_F:
     return "INT 16";
     break;
-  case INT32:
+  case INT32_F:
     return "INT 32";
     break;
-  case INT64:
+  case INT64_F:
     return "INT 64";
     break;
-  case FLOAT:
-    return "FLOAT";
+  case FLOAT_F:
+    return "FLOAT_F";
     break;
-  case DOUBLE:
-    return "DOUBLE";
+  case DOUBLE_F:
+    return "DOUBLE_F";
     break;
-  case CHAR_P:
+  case CHAR_P_F:
     return "STRING";
     break;
   default:

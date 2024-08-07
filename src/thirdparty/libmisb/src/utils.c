@@ -56,7 +56,7 @@ uint64_t get_timestamp()
 #include <math.h>
 #include <stddef.h>
 
-// INT16
+// INT16_F
 
 unsigned short signed_dec_to_int16(float value, float range)
 {
@@ -114,7 +114,7 @@ float int16_to_unsigned_dec(unsigned short value, float range, float offset)
   return result - offset;
 }
 
-// INT32
+// INT32_F
 
 int signed_dec_to_int32(double value, float range)
 {

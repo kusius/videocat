@@ -14,6 +14,15 @@
         "utils.h": "c",
         "keys.h": "c",
         "unpack.h": "c",
-        "avutil.h": "c"
+        "avutil.h": "c",
+        "platform.h": "c",
+        "platform_windows.h": "c",
+        "nuklear.h": "c",
+        "ui.h": "c",
+        "combaseapi.h": "c",
+        "minwindef.h": "c",
+        "avformat.h": "c",
+        "nuklear_d3d12.h": "c",
+        "string.h": "c"
     }
 }

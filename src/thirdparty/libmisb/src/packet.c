@@ -49,7 +49,7 @@ struct Packet *initialize_packet()
 
   // Add mandatory Timestamp KLV which needs to be the first klv
   uint64_t unix_time = get_timestamp();
-  struct GenericValue unix_time_stamp_value = {UINT64, .uint64_value = unix_time};
+  struct GenericValue unix_time_stamp_value = {UINT64_F, .uint64_value = unix_time};
   packet = add_klv(packet, FieldMap[UNIX_TIME_STAMP], unix_time_stamp_value);
 
   // Add mandatory KLV for UAS_LDS version which is ST0601.6
@@ -132,27 +132,27 @@ char *encode_value(const struct Field field, struct GenericValue *value)
   {
     switch (field.encoded_format)
     {
-    case UINT16:
+    case UINT16_F:
       offset.foffset = (field.range.min.float_value < 0) ? -field.range.min.float_value : 0;
       value->uint16_value = unsigned_dec_to_int16(value->float_value,
                                                   fabs(field.range.min.float_value) +
                                                   fabs(field.range.max.float_value),
                                                   offset.foffset);
       return (char*)&value->uint16_value;
-    case UINT32:
+    case UINT32_F:
       offset.doffset = (field.range.min.float_value < 0) ? -field.range.min.float_value : 0;
       value->uint32_value = unsigned_dec_to_int32(value->double_value,
                                                   fabs(field.range.min.double_value) +
                                                   fabs(field.range.max.double_value),
                                                   offset.doffset);
       return (char*)&value->uint32_value;
-    case INT16:
+    case INT16_F:
       value->int16_value = signed_dec_to_int16(value->float_value,
                                                fabs(field.range.min.float_value) +
                                                fabs(field.range.max.float_value));
       return (char*)&value->int16_value;
 
-    case INT32:
+    case INT32_F:
        value->int32_value = signed_dec_to_int16(value->double_value,
                                                 fabs(field.range.min.double_value) +
                                                 fabs(field.range.max.double_value));
@@ -166,23 +166,23 @@ char *encode_value(const struct Field field, struct GenericValue *value)
   {
     switch (value->type)
     {
-    case UINT8:
+    case UINT8_F:
       return (char*)&value->uint8_value;
-    case UINT16:
+    case UINT16_F:
       return (char*)&value->uint16_value;
-    case UINT32:
+    case UINT32_F:
       return (char*)&value->uint32_value;
-    case UINT64:
+    case UINT64_F:
       return (char*)&value->uint64_value;
-    case INT8:
+    case INT8_F:
       return (char*)&value->int8_value;
-    case INT16:
+    case INT16_F:
       return (char*)&value->int16_value;
-    case INT32:
+    case INT32_F:
       return (char*)&value->int32_value;
-    case INT64:
+    case INT64_F:
       return (char*)&value->int64_value;
-    case CHAR_P:
+    case CHAR_P_F:
       return value->charp_value;
     default :
       return NULL;
@@ -196,7 +196,7 @@ struct Packet *add_klv(struct Packet *packet, const struct Field field,
                        struct GenericValue value)
 {
   uint8_t field_len = field.len;
-  if (value.type == CHAR_P)
+  if (value.type == CHAR_P_F)
     field_len = strlen(value.charp_value);
 
   if (field.value_format != value.type)
@@ -221,7 +221,7 @@ struct Packet *add_klv(struct Packet *packet, const struct Field field,
   for (int i = 0; i < field_len; i++)
   {
     // Because of endianess we insert backward, except when dealing with char*
-    if (value.type != CHAR_P)
+    if (value.type != CHAR_P_F)
       packet->content[packet->size++] = bytes_value[field_len - i - 1];
     else
     {
