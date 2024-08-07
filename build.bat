@@ -1,14 +1,22 @@
 @echo off
-set PROJECT_DIR=C:\Projects\videocat
+set PROJECT_DIR=%cd%
 set SRCDIR=%PROJECT_DIR%\src
 set PROJECT_BUILD_DIR=%PROJECT_DIR%\build
 
-set PROJECT_LIB_DIRECTORIES=%SRCDIR%\thirdparty\libs;%LOCALAPPDATA%\Microsoft\WinGet\Packages\Gyan.FFmpeg.Shared_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-7.0.2-full_build-shared\lib
+FOR /F "tokens=* USEBACKQ" %%F IN (`dir /s /b Gyan.FFmpeg.Shared* ^| dir /s /b /ad ffmpeg*`) DO (
+SET FFMPEG_DIR=%%F
+)
+
+set PROJECT_LIB_DIRECTORIES=%SRCDIR%\thirdparty\libs;^
+%FFMPEG_DIR%\lib
 
 :: MSVC reads these env variables by default to search for objects, 
 :: libraries and include directories
 set LIB=%LIB%;%PROJECT_LIB_DIRECTORIES%
-set INCLUDE=%INCLUDE%;%SRCDIR%;%SRCDIR%\thirdparty\libmisb\include;%LOCALAPPDATA%\Microsoft\WinGet\Packages\Gyan.FFmpeg.Shared_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-7.0.2-full_build-shared\include
+set INCLUDE=%INCLUDE%;^
+%SRCDIR%;^
+%SRCDIR%\thirdparty\libmisb\include;^
+%FFMPEG_DIR%\include
 
 
 @REM Debug configuration
@@ -31,8 +39,10 @@ set DEBUG_LINK_LIBRARIES=avformat.lib^
 :: all the compilation output goes into build
 mkdir %PROJECT_BUILD_DIR%
 pushd %PROJECT_BUILD_DIR%
-@echo on
-cl %DEBUG_COMPILER_FLAGS% %SOURCE_FILES% %DEBUG_LINK_LIBRARIES% /link /OUT:videocat.exe
+
+cl %DEBUG_COMPILER_FLAGS% %SOURCE_FILES% /link %DEBUG_LINK_LIBRARIES% /OUT:videocat.exe
 del *.obj
 
 popd
+
+xcopy /d %PROJECT_DIR%\bin\windows\* %PROJECT_BUILD_DIR%
